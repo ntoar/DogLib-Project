@@ -11,7 +11,14 @@ public class Dog {
 	protected double weight;
 	protected String breed;
 	
-	Dog(String name, String date, double weight, String breed){
+	
+	/*
+	 * Initialize the dog with all the required attributes
+	 * That is: a name, date of birth, weight and breed
+	 * Date of birth is being passed as a string with format dd-MM-yyyy
+	 * If not passing the correct format, will return exception of not a valid format
+	 */
+	protected Dog(String name, String date, double weight, String breed) {
 		this.name = name;
 		
 		// assign the datedOfBirth from a string in the format dd-MM-yyyy
@@ -26,6 +33,12 @@ public class Dog {
 		this.breed = breed;
 		
 	}
+	
+	/*
+	 * The getters for the attributes
+	 * At this stage, there is no need for setters
+	 * given the dog is initialized with all the required attributes in the constructor
+	 */
 	
 	public String getName() {
 		return this.name;
@@ -42,6 +55,17 @@ public class Dog {
 	public String getBreed() {
 		return this.breed;
 	}
+	
+	
+	/*
+	 * Method to evaluate if the dog meets a certain condition
+	 * It takes three String params:
+	 * a: the dog attribute to check for the condition (breed, name, weight, date)
+	 * b: the comparison operator depending on the attribute can be
+	 * 		eq, neq for breed and name
+	 * 		>, <, = for weight
+	 * 		isAfter, isBefore, isEqual for date
+	 */
 	
 	public boolean meetsCondition(String a, String b, String c) {
 		

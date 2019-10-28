@@ -15,21 +15,50 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-//import com.doglib.Dog;
-
 public class DogLib {
+	
+	/*
+	 * This library will be used to keep track of dog information as a list of dogs
+	 * In order to initialize the dog list, an xml document with the list of dogs has to be passed
+	 * Example of xml doc:
+	 * 
+	 * <?xml version="1.0" encoding="UTF-8"?>
+	 *	<dogs>
+	 *		<dog name="Corrie">
+     *			<dateOfBirth>18-03-2012</dateOfBirth>
+     *			<weight>17</weight>
+     *			<breed>Shiba Inu</breed>
+  	 *		</dog>
+  	 *		<dog name="Havko">
+     *			<dateOfBirth>25-08-2014</dateOfBirth>
+     *			<weight>25</weight>
+     *			<breed>Siberian Husky</breed>
+  	 *		</dog>
+	 *	</dogs>
+	 *
+	 */
 	
 	public List<Dog> dogs;	
 	public File xmlFile;
 	
 	
-	DogLib(String filePath){
+	/*
+	 * Initialize the dog list from the xml file using the method initDogList 
+	 */
+	public DogLib(String filePath){
 		this.xmlFile = new File(filePath);
 		dogs = new ArrayList<Dog>();
 		initDogList(this.xmlFile);
 		
 	}
 	
+	
+	/*
+	 * This method returns the average weight of the dogs of a certain breed entered as a parameter
+	 * It loops through the list and sums the weight of all the dogs belonging to the breed
+	 * It also gets the number of dogs that belong to that breed
+	 * Then it returns the sum of the weight / the number of dogs to get the average weight 
+	 */
 	public double averageWeight(String breed) {
 		double sum=0;
 		int num=0;
@@ -42,6 +71,17 @@ public class DogLib {
 		}
 		return sum/num;
 	}
+	
+	/*
+	 * This method returns the average weight for all breeds in the form of a Map of String,Double
+	 * So you would end having the map like:
+	 * [Shiba Inu] -> [17]
+	 * [Siberian Husky] -> [25]
+	 * 
+	 * In order to calculate this, first we get a map of String,List<Double> so to have 
+	 * a list of doubles that represent the weight for every dog of the same breed
+	 * Then we iterate over the map calculating the average value 
+	 */
 	
 	public Map<String,Double> averageWeightPerBreed(){
 		
@@ -77,6 +117,18 @@ public class DogLib {
 		return breedStats;
 	}
 	
+	
+	/*
+	 * This method returns a list of the dogs that meet a certain condition
+	 * This makes use of the meetsCondition method in the Dog class
+	 * It takes three String params:
+	 * a: the dog attribute to check for the condition (breed, name, weight, date)
+	 * b: the comparison operator depending on the attribute can be
+	 * 		eq, neq for breed and name
+	 * 		>, <, = for weight
+	 * 		isAfter, isBefore, isEqual for date
+	 */
+	
 	public List<Dog> dogsByCondition(String a,String b,String c){
 		List<Dog> listdog = new ArrayList<Dog>();
 		for(int i=0;i<this.dogs.size();i++) {
@@ -87,6 +139,10 @@ public class DogLib {
 		return listdog;
 		
 	}
+	
+	/*
+	 * This method returns the oldest dog after a certain date of birth
+	 */
 	
 	public Dog oldestDogAfterDate(LocalDate date) {
 		
@@ -110,7 +166,9 @@ public class DogLib {
 	
 	
 	
-	// parse the xml dogs file using the DOM parser and initialize the dog list
+	/* 
+	 * Parse the xml dogs file using the DOM parser and initialize the dog list
+	 */
 	private void initDogList(File f) {
 		
 		try {
