@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DogLib.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven-doglib</a> &gt; <a href="index.source.html" class="el_package">com.doglib</a> &gt; <span class="el_source">DogLib.java</span></div><h1>DogLib.java</h1><pre class="source lang-java linenums">package com.doglib;
+
+import java.io.File;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+public class DogLib {
+	
+	/*
+	 * This library will be used to keep track of dog information as a list of dogs
+	 * In order to initialize the dog list, an xml document with the list of dogs has to be passed
+	 * Example of xml doc:
+	 * 
+	 * &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+	 *	&lt;dogs&gt;
+	 *		&lt;dog name=&quot;Corrie&quot;&gt;
+     *			&lt;dateOfBirth&gt;18-03-2012&lt;/dateOfBirth&gt;
+     *			&lt;weight&gt;17&lt;/weight&gt;
+     *			&lt;breed&gt;Shiba Inu&lt;/breed&gt;
+  	 *		&lt;/dog&gt;
+  	 *		&lt;dog name=&quot;Havko&quot;&gt;
+     *			&lt;dateOfBirth&gt;25-08-2014&lt;/dateOfBirth&gt;
+     *			&lt;weight&gt;25&lt;/weight&gt;
+     *			&lt;breed&gt;Siberian Husky&lt;/breed&gt;
+  	 *		&lt;/dog&gt;
+	 *	&lt;/dogs&gt;
+	 *
+	 */
+	
+	public List&lt;Dog&gt; dogs;	
+	public File xmlFile;
+	
+	
+	/*
+	 * Initialize an empty dog list
+	 */
+<span class="fc" id="L48">	public DogLib() {</span>
+<span class="fc" id="L49">		this.dogs = new ArrayList&lt;Dog&gt;();</span>
+<span class="fc" id="L50">	}</span>
+	
+	
+	/*
+	 * Initialize the dog list from the xml file using the method initDogList 
+	 */
+<span class="fc" id="L56">	public DogLib(String filePath){</span>
+<span class="fc" id="L57">		this.xmlFile = new File(filePath);</span>
+<span class="fc" id="L58">		this.dogs = new ArrayList&lt;Dog&gt;();</span>
+<span class="fc" id="L59">		initDogList(this.xmlFile);</span>
+		
+<span class="fc" id="L61">	}</span>
+	
+	/*
+	 * Insert new dog in the list
+	 */
+	public void addDog(Dog d) {
+<span class="fc" id="L67">		this.dogs.add(d);</span>
+<span class="fc" id="L68">	}</span>
+	
+	
+	/*
+	 * This method returns the average weight of the dogs of a certain breed entered as a parameter
+	 * It loops through the list and sums the weight of all the dogs belonging to the breed
+	 * It also gets the number of dogs that belong to that breed
+	 * Then it returns the sum of the weight / the number of dogs to get the average weight 
+	 */
+	public double averageWeight(String breed) {
+<span class="fc" id="L78">		double sum=0;</span>
+<span class="fc" id="L79">		int num=0;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		for(int i=0;i&lt;this.dogs.size();i++) {</span>
+<span class="fc" id="L81">			Dog d=this.dogs.get(i);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if(d.getBreed().contentEquals(breed)) {</span>
+<span class="fc" id="L83">				sum+=d.getWeight();</span>
+<span class="fc" id="L84">				num++;</span>
+			}
+		}
+<span class="fc" id="L87">		return sum/num;</span>
+	}
+	
+	/*
+	 * This method returns the average weight for all breeds in the form of a Map of String,Double
+	 * So you would end having the map like:
+	 * [Shiba Inu] -&gt; [17]
+	 * [Siberian Husky] -&gt; [25]
+	 * 
+	 * In order to calculate this, first we get a map of String,List&lt;Double&gt; so to have 
+	 * a list of doubles that represent the weight for every dog of the same breed
+	 * Then we iterate over the map calculating the average value 
+	 */
+	
+	public Map&lt;String,Double&gt; averageWeightPerBreed(){
+		
+<span class="fc" id="L103">		Map&lt;String,List&lt;Double&gt;&gt; breedList = new HashMap&lt;String,List&lt;Double&gt;&gt;();</span>
+<span class="fc" id="L104">		Map&lt;String,Double&gt; breedStats = new HashMap&lt;String,Double&gt;();</span>
+		
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		for(int i=0;i&lt;this.dogs.size();i++) {</span>
+<span class="fc" id="L107">			String breed = this.dogs.get(i).getBreed();</span>
+<span class="fc" id="L108">			double weight = this.dogs.get(i).getWeight();</span>
+			
+<span class="fc" id="L110">			breedList.putIfAbsent(breed, new ArrayList&lt;Double&gt;());</span>
+<span class="fc" id="L111">			breedList.get(breed).add(weight);</span>
+			
+		}
+		
+		
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for(Map.Entry&lt;String,List&lt;Double&gt;&gt; entry : breedList.entrySet()) {</span>
+<span class="fc" id="L117">			String breed=entry.getKey();</span>
+<span class="fc" id="L118">			List&lt;Double&gt; weightValues=entry.getValue();</span>
+			
+<span class="fc" id="L120">			double sum=0;</span>
+<span class="fc" id="L121">			int num=0;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			for(int i=0;i&lt;weightValues.size();i++) {</span>
+<span class="fc" id="L123">				sum+=weightValues.get(i);</span>
+<span class="fc" id="L124">				num++;				</span>
+			}
+			
+<span class="fc" id="L127">			breedStats.put(breed, sum/num);</span>
+			
+			
+<span class="fc" id="L130">		}</span>
+		
+<span class="fc" id="L132">		return breedStats;</span>
+	}
+	
+	
+	/*
+	 * This method returns a list of the dogs that meet a certain condition
+	 * This makes use of the meetsCondition method in the Dog class
+	 * It takes three String params:
+	 * a: the dog attribute to check for the condition (breed, name, weight, date)
+	 * b: the comparison operator depending on the attribute can be
+	 * 		eq, neq for breed and name
+	 * 		&gt;, &lt;, = for weight
+	 * 		isAfter, isBefore, isEqual for date
+	 */
+	
+	public List&lt;Dog&gt; dogsByCondition(String a,String b,String c){
+<span class="fc" id="L148">		List&lt;Dog&gt; listdog = new ArrayList&lt;Dog&gt;();</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		for(int i=0;i&lt;this.dogs.size();i++) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if(this.dogs.get(i).meetsCondition(a,b,c)) {</span>
+<span class="fc" id="L151">				listdog.add(this.dogs.get(i));</span>
+			}
+		}		
+<span class="fc" id="L154">		return listdog;</span>
+		
+	}
+	
+	/*
+	 * This method returns the oldest dog after a certain date of birth
+	 */
+	
+	public Dog oldestDogAfterDate(LocalDate date) {
+		
+<span class="fc" id="L164">		Dog d=null;</span>
+		
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		for(int i=0;i&lt;this.dogs.size();i++) {</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			if(d == null) {</span>
+				//System.out.println(this.dogs.get(i));
+<span class="fc bfc" id="L169" title="All 2 branches covered.">				if(this.dogs.get(i).getDate().isAfter(date))</span>
+<span class="fc" id="L170">					d=this.dogs.get(i);</span>
+			}
+			else {
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">				if(this.dogs.get(i).getDate().isBefore(d.getDate())) {</span>
+<span class="nc" id="L174">					d=this.dogs.get(i);</span>
+				}
+			}
+		}
+		
+<span class="fc" id="L179">		return d;</span>
+	}
+	
+	
+	
+	/* 
+	 * Parse the xml dogs file using the DOM parser and initialize the dog list
+	 */
+	private void initDogList(File f) {
+		
+		try {
+			
+<span class="fc" id="L191">			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L192">			DocumentBuilder builder = factory.newDocumentBuilder();</span>
+<span class="fc" id="L193">			Document doc = builder.parse(f);</span>
+<span class="fc" id="L194">			doc.getDocumentElement();</span>
+<span class="fc" id="L195">			NodeList dogNodes=doc.getElementsByTagName(&quot;dog&quot;);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">			for(int i=0;i&lt;dogNodes.getLength();i++) {</span>
+<span class="fc" id="L197">				Node dogNode = dogNodes.item(i);</span>
+				
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">				if(dogNode.getNodeType() == Node.ELEMENT_NODE) {</span>
+<span class="fc" id="L200">					Element dogElement = (Element) dogNode;</span>
+					
+<span class="fc" id="L202">					String dogName = dogElement.getAttribute(&quot;name&quot;);</span>
+<span class="fc" id="L203">					String dogDate = dogElement.getElementsByTagName(&quot;dateOfBirth&quot;).item(0).getTextContent();</span>
+<span class="fc" id="L204">					Double dogWeight = Double.parseDouble(dogElement.getElementsByTagName(&quot;weight&quot;).item(0).getTextContent());</span>
+<span class="fc" id="L205">					String dogBreed = dogElement.getElementsByTagName(&quot;breed&quot;).item(0).getTextContent();</span>
+					
+<span class="fc" id="L207">					this.dogs.add(new Dog(dogName,dogDate,dogWeight,dogBreed));</span>
+				}
+			}			
+<span class="nc" id="L210">		}catch(Exception e) {</span>
+<span class="nc" id="L211">			System.out.println(&quot;Can't parse document &quot;+ this.xmlFile);</span>
+<span class="fc" id="L212">		}</span>
+			
+		
+		
+<span class="fc" id="L216">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

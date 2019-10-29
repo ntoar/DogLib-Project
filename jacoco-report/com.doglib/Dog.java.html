@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven-doglib</a> &gt; <a href="index.source.html" class="el_package">com.doglib</a> &gt; <span class="el_source">Dog.java</span></div><h1>Dog.java</h1><pre class="source lang-java linenums">package com.doglib;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class Dog {
+	
+	protected String name;
+	protected LocalDate dateOfBirth;
+	protected double weight;
+	protected String breed;
+	
+	
+	/*
+	 * Initialize the dog with all the required attributes
+	 * That is: a name, date of birth, weight and breed
+	 * Date of birth is being passed as a string with format dd-MM-yyyy
+	 * If not passing the correct format, will return exception of not a valid format
+	 */
+<span class="fc" id="L21">	public Dog(String name, String date, double weight, String breed) {</span>
+<span class="fc" id="L22">		this.name = name;</span>
+		
+		// assign the datedOfBirth from a string in the format dd-MM-yyyy
+<span class="fc" id="L25">		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd-MM-yyyy&quot;);</span>
+		try {
+<span class="fc" id="L27">			this.dateOfBirth = LocalDate.parse(date,formatter);</span>
+<span class="nc" id="L28">		}catch(DateTimeParseException e) {</span>
+<span class="nc" id="L29">			System.out.println(&quot;Not a valid date format &quot;+e);</span>
+<span class="fc" id="L30">		}</span>
+		
+<span class="fc" id="L32">		this.weight = weight;</span>
+<span class="fc" id="L33">		this.breed = breed;</span>
+		
+<span class="fc" id="L35">	}</span>
+	
+	/*
+	 * The getters for the attributes
+	 * At this stage, there is no need for setters
+	 * given the dog is initialized with all the required attributes in the constructor
+	 */
+	
+	public String getName() {
+<span class="nc" id="L44">		return this.name;</span>
+	}
+	
+	public LocalDate getDate() {
+<span class="fc" id="L48">		return this.dateOfBirth;</span>
+	}
+	
+	public double getWeight() {
+<span class="fc" id="L52">		return this.weight;</span>
+	}
+	
+	public String getBreed() {
+<span class="fc" id="L56">		return this.breed;</span>
+	}
+	
+	
+	/*
+	 * Method to evaluate if the dog meets a certain condition
+	 * It takes three String params:
+	 * a: the dog attribute to check for the condition (breed, name, weight, date)
+	 * b: the comparison operator depending on the attribute can be
+	 * 		eq, neq for breed and name
+	 * 		&gt;, &lt;, = for weight
+	 * 		isAfter, isBefore, isEqual for date
+	 */
+	
+	public boolean meetsCondition(String a, String b, String c) {
+		
+<span class="pc bpc" id="L72" title="1 of 5 branches missed.">		switch(a) {</span>
+		case &quot;breed&quot;:
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			if(b.equals(&quot;eq&quot;)) {</span>
+<span class="fc" id="L75">				return this.breed.equals(c);</span>
+			}
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			else if (b.contentEquals(&quot;neq&quot;)) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">				return !this.breed.equals(c);</span>
+			}
+<span class="nc" id="L80">			else return false;</span>
+			
+		case &quot;name&quot;:
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if(b.equals(&quot;eq&quot;)) {</span>
+<span class="fc" id="L84">				return this.name.equals(c);</span>
+			}
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			else if (b.contentEquals(&quot;neq&quot;)) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">				return !this.name.equals(c);</span>
+			}
+<span class="nc" id="L89">			else return false;</span>
+				
+		case &quot;weight&quot;:
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if(b.equals(&quot;&gt;&quot;)) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">				return this.weight &gt; Double.parseDouble(c);</span>
+			}
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			else if (b.equals(&quot;&lt;&quot;)) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				return this.weight &lt; Double.parseDouble(c);</span>
+			}
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			else if (b.contentEquals(&quot;=&quot;)) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">				return this.weight == Double.parseDouble(c);</span>
+			}
+<span class="fc" id="L101">			else return false;</span>
+			
+		case &quot;date&quot;:
+<span class="fc" id="L104">			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd-MM-yyyy&quot;);</span>
+<span class="fc" id="L105">			LocalDate date = LocalDate.parse(c,formatter);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if(b.equals(&quot;isAfter&quot;)) {</span>
+<span class="fc" id="L107">				return this.dateOfBirth.isAfter(date);</span>
+			}
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			else if(b.equals(&quot;isBefore&quot;)) {</span>
+<span class="nc" id="L110">				return this.dateOfBirth.isBefore(date);</span>
+			}
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			else if(b.equals(&quot;isEqual&quot;)) {</span>
+<span class="fc" id="L113">				return this.dateOfBirth.isEqual(date);</span>
+			}
+<span class="nc" id="L115">			else return false;</span>
+			
+		default:
+<span class="nc" id="L118">			return false;</span>
+			
+		}
+	}
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
