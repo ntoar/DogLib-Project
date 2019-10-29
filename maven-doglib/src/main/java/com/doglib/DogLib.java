@@ -43,13 +43,28 @@ public class DogLib {
 	
 	
 	/*
+	 * Initialize an empty dog list
+	 */
+	public DogLib() {
+		this.dogs = new ArrayList<Dog>();
+	}
+	
+	
+	/*
 	 * Initialize the dog list from the xml file using the method initDogList 
 	 */
 	public DogLib(String filePath){
 		this.xmlFile = new File(filePath);
-		dogs = new ArrayList<Dog>();
+		this.dogs = new ArrayList<Dog>();
 		initDogList(this.xmlFile);
 		
+	}
+	
+	/*
+	 * Insert new dog in the list
+	 */
+	public void addDog(Dog d) {
+		this.dogs.add(d);
 	}
 	
 	

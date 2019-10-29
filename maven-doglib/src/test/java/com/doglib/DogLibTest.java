@@ -19,6 +19,15 @@ public class DogLibTest {
 	}
 	
 	@Test
+	public void addDogTest() {
+		DogLib dl = new DogLib();
+		Dog d = new Dog("Rocky","10-01-2010", 15, "Shiba Inu");
+		dl.addDog(d);
+		
+		assertEquals(true, dl.dogs.size()==1);
+	}
+	
+	@Test
 	public void averageWeightTest() {
 		DogLib dl = new DogLib("C:\\Users\\USUARIO\\assignment\\dogstest.xml");
 		

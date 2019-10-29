@@ -18,7 +18,7 @@ public class Dog {
 	 * Date of birth is being passed as a string with format dd-MM-yyyy
 	 * If not passing the correct format, will return exception of not a valid format
 	 */
-	protected Dog(String name, String date, double weight, String breed) {
+	public Dog(String name, String date, double weight, String breed) {
 		this.name = name;
 		
 		// assign the datedOfBirth from a string in the format dd-MM-yyyy
