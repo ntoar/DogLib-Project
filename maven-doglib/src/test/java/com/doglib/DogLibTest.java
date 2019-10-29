@@ -13,7 +13,7 @@ public class DogLibTest {
 
 	@Test
 	public void initDogLibTest() {
-		DogLib dl = new DogLib("C:\\Users\\USUARIO\\assignment\\dogstest.xml");
+		DogLib dl = new DogLib("src\\test\\resources\\dogstest.xml");
 		
 		assertEquals(true, dl.dogs.size()==4);
 	}

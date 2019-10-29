@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dogs>
+  <dog name="Riki">
+    <dateOfBirth>05-02-2005</dateOfBirth>
+    <weight>38</weight>
+    <breed>Rhodesian Ridgeback</breed>
+  </dog>
+  <dog name="Baldi">
+    <dateOfBirth>10-03-2010</dateOfBirth>
+    <weight>55</weight>
+    <breed>Bernese Mountain Dog</breed>
+  </dog>
+  <dog name="Corrie">
+    <dateOfBirth>18-03-2012</dateOfBirth>
+    <weight>17</weight>
+    <breed>Shiba Inu</breed>
+  </dog>
+  <dog name="Havko">
+    <dateOfBirth>25-08-2014</dateOfBirth>
+    <weight>25</weight>
+    <breed>Siberian Husky</breed>
+  </dog>
+</dogs>
