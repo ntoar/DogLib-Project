@@ -39,11 +39,12 @@ and provides some methods to query the list of dogs.
   The list of dogs can be initialized as an empty list or from an xml file containing the dog info.
   In addtion the library provides some methods to run some queries on the list of dogs.
   
-  Basic Methods : the methods for initializing the list when constructing it or adding new dogs
-    * #### Empty Constructor : DogLib()
+  #### Basic Methods : the methods for initializing the list when constructing it or adding new dogs
+  
+    * ##### Empty Constructor : DogLib()
       Returns an empty list of dogs
     
-    * #### The xml Constructor : DogLib(File xml)
+    * ##### The xml Constructor : DogLib(File xml)
       Returns a list of dogs from the information in the xml File
       
       ```xml
@@ -62,11 +63,12 @@ and provides some methods to query the list of dogs.
 	     </dogs>
       ```
       
-    * #### void addDog(Dog d)
+    * ##### void addDog(Dog d)
       This method is used for adding dogs to the list
     
       
-  Methods:
+  #### Methods: the methods for querying the list
+  
     * #### double averageWeight(String breed)
       The method calculates the average weight for all the dogs of the same breed in the list
     
@@ -76,7 +78,7 @@ and provides some methods to query the list of dogs.
 	     [Shiba Inu] -> [17]
 	     [Siberian Husky] -> [25]
 	  
-	   * #### List<Dog> dogsByCondition(String a, String b, String c)
+    * #### List<Dog> dogsByCondition(String a, String b, String c)
       This method returns a list of the dogs that meet a certain condition
 	     This makes use of the meetsCondition method in the Dog class
 	     It takes three String params:
@@ -102,8 +104,8 @@ import com.doglib.DogLib;
 
 public class DogliBenchmark {
 
-	public static void main(String[] args) {
-		DogLib dl = new DogLib("dogs.xml");
+ public static void main(String[] args) {
+  DogLib dl = new DogLib("dogs.xml");
 		
   // averageWeight example
   double d = dl.averageWeight("Shiba Inu");
@@ -112,15 +114,13 @@ public class DogliBenchmark {
   Map<String, Double> m = dl.averageWeightPerBreed();
 		
   // dogsByCondition example		
-		List<Dog> d = dl.dogsByCondition("breed", "eq", "Shiba Inu");
+  List<Dog> d = dl.dogsByCondition("breed", "eq", "Shiba Inu");
   
   // oldestDogAfterDate example
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate date=LocalDate.parse("10-01-2010",formatter);		
-		Dog d = dl.oldestDogAfterDate(date);
-
-	}
-
+  LocalDate date=LocalDate.parse("10-01-2010",formatter);		
+  Dog d = dl.oldestDogAfterDate(date);
+ }
 }
 ```
   
