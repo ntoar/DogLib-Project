@@ -3,6 +3,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.function.Predicate;
 
 public class Dog {
 	
@@ -18,21 +19,21 @@ public class Dog {
 	 * Date of birth is being passed as a string with format dd-MM-yyyy
 	 * If not passing the correct format, will return exception of not a valid format
 	 */
-<span class="fc" id="L21">	public Dog(String name, String date, double weight, String breed) {</span>
-<span class="fc" id="L22">		this.name = name;</span>
+<span class="fc" id="L22">	public Dog(String name, String date, double weight, String breed) {</span>
+<span class="fc" id="L23">		this.name = name;</span>
 		
 		// assign the datedOfBirth from a string in the format dd-MM-yyyy
-<span class="fc" id="L25">		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd-MM-yyyy&quot;);</span>
+<span class="fc" id="L26">		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd-MM-yyyy&quot;);</span>
 		try {
-<span class="fc" id="L27">			this.dateOfBirth = LocalDate.parse(date,formatter);</span>
-<span class="nc" id="L28">		}catch(DateTimeParseException e) {</span>
-<span class="nc" id="L29">			System.out.println(&quot;Not a valid date format &quot;+e);</span>
-<span class="fc" id="L30">		}</span>
+<span class="fc" id="L28">			this.dateOfBirth = LocalDate.parse(date,formatter);</span>
+<span class="nc" id="L29">		}catch(DateTimeParseException e) {</span>
+<span class="nc" id="L30">			System.out.println(&quot;Not a valid date format &quot;+e);</span>
+<span class="fc" id="L31">		}</span>
 		
-<span class="fc" id="L32">		this.weight = weight;</span>
-<span class="fc" id="L33">		this.breed = breed;</span>
+<span class="fc" id="L33">		this.weight = weight;</span>
+<span class="fc" id="L34">		this.breed = breed;</span>
 		
-<span class="fc" id="L35">	}</span>
+<span class="fc" id="L36">	}</span>
 	
 	/*
 	 * The getters for the attributes
@@ -41,83 +42,69 @@ public class Dog {
 	 */
 	
 	public String getName() {
-<span class="nc" id="L44">		return this.name;</span>
+<span class="fc" id="L45">		return this.name;</span>
 	}
 	
 	public LocalDate getDate() {
-<span class="fc" id="L48">		return this.dateOfBirth;</span>
+<span class="fc" id="L49">		return this.dateOfBirth;</span>
 	}
 	
 	public double getWeight() {
-<span class="fc" id="L52">		return this.weight;</span>
+<span class="fc" id="L53">		return this.weight;</span>
 	}
 	
 	public String getBreed() {
-<span class="fc" id="L56">		return this.breed;</span>
+<span class="fc" id="L57">		return this.breed;</span>
+	}
+	
+	/*
+	 * Filter a dog with some predicates
+	 */
+	
+	// Breed Predicates
+	public static Predicate&lt;Dog&gt; isEqBreed(String breed){
+<span class="fc" id="L66">		return p -&gt; p.getBreed().equals(breed);</span>
+	}
+	
+	public static Predicate&lt;Dog&gt; isNeqBreed(String breed){
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		return p -&gt; ! p.getBreed().equals(breed);</span>
 	}
 	
 	
-	/*
-	 * Method to evaluate if the dog meets a certain condition
-	 * It takes three String params:
-	 * a: the dog attribute to check for the condition (breed, name, weight, date)
-	 * b: the comparison operator depending on the attribute can be
-	 * 		eq, neq for breed and name
-	 * 		&gt;, &lt;, = for weight
-	 * 		isAfter, isBefore, isEqual for date
-	 */
+	// Name Predicates
+	public static Predicate&lt;Dog&gt; isEqName(String name){
+<span class="fc" id="L76">		return p -&gt; p.getName().equals(name);</span>
+	}
 	
-	public boolean meetsCondition(String a, String b, String c) {
+	public static Predicate&lt;Dog&gt; isNeqName(String name){
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		return p -&gt; ! p.getName().equals(name);</span>
+	}
+	
+	
+	// Weight Predicates
+	public static Predicate&lt;Dog&gt; isGreaterWeight(double weight){
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		return p -&gt; p.getWeight() &gt; weight;</span>
+	}
+	
+	public static Predicate&lt;Dog&gt; isLesserWeight(double weight){
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		return p -&gt; p.getWeight() &lt; weight;</span>
+	}
+	
+	
+	// Date Predicates
+	public static Predicate&lt;Dog&gt; isAfterDate(LocalDate date){
+<span class="fc" id="L96">		return p -&gt; p.getDate().isAfter(date);</span>
+	}
+	
+	public static Predicate&lt;Dog&gt; isBeforeDate(LocalDate date){
+<span class="nc" id="L100">		return p -&gt; p.getDate().isBefore(date);</span>
+	}
+	
+	
+	
+	public String toString() {
+<span class="nc" id="L106">		return &quot;Name: &quot;+this.name+&quot;\nDate of Birth: &quot;+this.dateOfBirth+&quot;\nWeight: &quot;+this.weight+&quot;\nBreed: &quot;+this.breed;</span>
 		
-<span class="pc bpc" id="L72" title="1 of 5 branches missed.">		switch(a) {</span>
-		case &quot;breed&quot;:
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			if(b.equals(&quot;eq&quot;)) {</span>
-<span class="fc" id="L75">				return this.breed.equals(c);</span>
-			}
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			else if (b.contentEquals(&quot;neq&quot;)) {</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">				return !this.breed.equals(c);</span>
-			}
-<span class="nc" id="L80">			else return false;</span>
-			
-		case &quot;name&quot;:
-<span class="fc bfc" id="L83" title="All 2 branches covered.">			if(b.equals(&quot;eq&quot;)) {</span>
-<span class="fc" id="L84">				return this.name.equals(c);</span>
-			}
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			else if (b.contentEquals(&quot;neq&quot;)) {</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">				return !this.name.equals(c);</span>
-			}
-<span class="nc" id="L89">			else return false;</span>
-				
-		case &quot;weight&quot;:
-<span class="fc bfc" id="L92" title="All 2 branches covered.">			if(b.equals(&quot;&gt;&quot;)) {</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">				return this.weight &gt; Double.parseDouble(c);</span>
-			}
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			else if (b.equals(&quot;&lt;&quot;)) {</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">				return this.weight &lt; Double.parseDouble(c);</span>
-			}
-<span class="fc bfc" id="L98" title="All 2 branches covered.">			else if (b.contentEquals(&quot;=&quot;)) {</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">				return this.weight == Double.parseDouble(c);</span>
-			}
-<span class="fc" id="L101">			else return false;</span>
-			
-		case &quot;date&quot;:
-<span class="fc" id="L104">			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd-MM-yyyy&quot;);</span>
-<span class="fc" id="L105">			LocalDate date = LocalDate.parse(c,formatter);</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">			if(b.equals(&quot;isAfter&quot;)) {</span>
-<span class="fc" id="L107">				return this.dateOfBirth.isAfter(date);</span>
-			}
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			else if(b.equals(&quot;isBefore&quot;)) {</span>
-<span class="nc" id="L110">				return this.dateOfBirth.isBefore(date);</span>
-			}
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			else if(b.equals(&quot;isEqual&quot;)) {</span>
-<span class="fc" id="L113">				return this.dateOfBirth.isEqual(date);</span>
-			}
-<span class="nc" id="L115">			else return false;</span>
-			
-		default:
-<span class="nc" id="L118">			return false;</span>
-			
-		}
 	}
 	
 
