@@ -78,26 +78,8 @@ and provides some methods to query the list of dogs.
 	     [Shiba Inu] -> [17]
 	     [Siberian Husky] -> [25]
 	  
-    * #### List<Dog> dogsByConditionPredicate(Predicate<Dog> predicate)
-      This method returns a list of the dogs that meet a certain condition  
-      This makes use of the predefined predicates in the Dog class:
-        * isEqBreed(String breed)  
-	returns a list of all dogs with Breed equals breed
-        * isNeqBreed(String breed)  
-	returns a list of all dogs with Breed different than breed
-        * isEqName(String name)  
-	returns a list of all dogs with Name equals name
-        * isNeqName(String name)  
-	returns a list of all dogs with Name different than name
-        * isGreaterWeight(double weight)  
-	returns a list of all dogs with Weight \> weight
-        * isLesserWeight(double weight)  
-	returns a list of all dogs with Weigh < weight
-        * isAfterDate(LocalDate date)  
-	returns a list of all dogs with DateofBirth after date
-        * isBeforeDate(LocalDate date)  
-	returns a list of all dogs with DateofBirth before date
-	
+    * #### List<Dog> dogsByCondition(Predicate<Dog> predicate)
+      This method returns a list of the dogs that meet a certain condition  	
                  
     * #### Dog oldestDogAfterDate(LocalDate date)
       This method returns the oldest dog after a certain date of birth
@@ -125,7 +107,7 @@ public class DogliBenchmark {
   Map<String, Double> m = dl.averageWeightPerBreed();
 		
   // dogsByCondition example		
-  List<Dog> d = dl.dogsByConditionPredicate(Dog.isEqBreed("Shiba Inu"));
+  List<Dog> d = dl.dogsByCondition(p->p.getBreed().equals("Shiba Inu");
   
   // oldestDogAfterDate example
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
