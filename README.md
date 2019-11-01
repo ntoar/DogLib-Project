@@ -79,16 +79,24 @@ and provides some methods to query the list of dogs.
 	     [Siberian Husky] -> [25]
 	  
     * #### List<Dog> dogsByCondition(Predicate<Dog> predicate)
-      This method returns a list of the dogs that meet a certain condition
+      This method returns a list of the dogs that meet a certain condition  
       This makes use of the predefined predicates in the Dog class:
-        * isEqBreed(String breed) returns a list of all dogs with Breed equals breed
-        * isNeqBreed(String breed) returns a list of all dogs with Breed different than breed
-        * isEqName(String name) returns a list of all dogs with Name equals name
-        * isNeqName(String name) returns a list of all dogs with Name different than name
-        * isGreaterWeight(double weight) returns a list of all dogs with Weight \> weight
-        * isLesserWeight(double weight) returns a list of all dogs with Weigh < weight
-        * isAfterDate(LocalDate date) returns a list of all dogs with DateofBirth after date
-        * isBeforeDate(LocalDate date) returns a list of all dogs with DateofBirth before date
+        * isEqBreed(String breed)  
+	returns a list of all dogs with Breed equals breed
+        * isNeqBreed(String breed)  
+	returns a list of all dogs with Breed different than breed
+        * isEqName(String name)  
+	returns a list of all dogs with Name equals name
+        * isNeqName(String name)  
+	returns a list of all dogs with Name different than name
+        * isGreaterWeight(double weight)  
+	returns a list of all dogs with Weight \> weight
+        * isLesserWeight(double weight)  
+	returns a list of all dogs with Weigh < weight
+        * isAfterDate(LocalDate date)  
+	returns a list of all dogs with DateofBirth after date
+        * isBeforeDate(LocalDate date)  
+	returns a list of all dogs with DateofBirth before date
 	
                  
     * #### Dog oldestDogAfterDate(LocalDate date)
