@@ -58,48 +58,13 @@ public class Dog {
 	}
 	
 	/*
-	 * Filter a dog with some predicates
+	 * The setters, so far we only implement set Weight
+	 * because it is the only expected attribute to change
 	 */
-	
-	// Breed Predicates
-	public static Predicate<Dog> isEqBreed(String breed){
-		return p -> p.getBreed().equals(breed);
+	public void setWeight(double weight) {
+		this.weight=weight;
 	}
-	
-	public static Predicate<Dog> isNeqBreed(String breed){
-		return p -> ! p.getBreed().equals(breed);
-	}
-	
-	
-	// Name Predicates
-	public static Predicate<Dog> isEqName(String name){
-		return p -> p.getName().equals(name);
-	}
-	
-	public static Predicate<Dog> isNeqName(String name){
-		return p -> ! p.getName().equals(name);
-	}
-	
-	
-	// Weight Predicates
-	public static Predicate<Dog> isGreaterWeight(double weight){
-		return p -> p.getWeight() > weight;
-	}
-	
-	public static Predicate<Dog> isLesserWeight(double weight){
-		return p -> p.getWeight() < weight;
-	}
-	
-	
-	// Date Predicates
-	public static Predicate<Dog> isAfterDate(LocalDate date){
-		return p -> p.getDate().isAfter(date);
-	}
-	
-	public static Predicate<Dog> isBeforeDate(LocalDate date){
-		return p -> p.getDate().isBefore(date);
-	}
-	
+		
 	
 	
 	public String toString() {

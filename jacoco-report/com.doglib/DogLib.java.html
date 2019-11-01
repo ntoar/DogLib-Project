@@ -136,12 +136,17 @@ public class DogLib {
 	
 	
 	/*
-	 * This method returns a list of the dogs that meet a certain condition
+	 * This method returns a list of the dogs that meet a certain predicate
 	 * 
 	 */
 	
-	public List&lt;Dog&gt; dogsByConditionPredicate(Predicate&lt;Dog&gt; predicate){
-<span class="fc" id="L144">		return this.dogs.stream().filter(predicate).collect(Collectors.&lt;Dog&gt;toList());</span>
+	public List&lt;Dog&gt; dogsByCondition(Predicate&lt;Dog&gt; predicate){
+<span class="fc" id="L144">		List&lt;Dog&gt; ld=new ArrayList&lt;Dog&gt;();</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for(Dog d : this.dogs) {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if(predicate.test(d))</span>
+<span class="fc" id="L147">				ld.add(d);				</span>
+<span class="fc" id="L148">		}</span>
+<span class="fc" id="L149">		return ld;</span>
 	}
 	
 	/*
@@ -150,22 +155,22 @@ public class DogLib {
 	
 	public Dog oldestDogAfterDate(LocalDate date) {
 		
-<span class="fc" id="L153">		Dog d=null;</span>
+<span class="fc" id="L158">		Dog d=null;</span>
 		
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		for(int i=0;i&lt;this.dogs.size();i++) {</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">			if(d == null) {</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for(int i=0;i&lt;this.dogs.size();i++) {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">			if(d == null) {</span>
 				//System.out.println(this.dogs.get(i));
-<span class="fc bfc" id="L158" title="All 2 branches covered.">				if(this.dogs.get(i).getDate().isAfter(date))</span>
-<span class="fc" id="L159">					d=this.dogs.get(i);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">				if(this.dogs.get(i).getDate().isAfter(date))</span>
+<span class="fc" id="L164">					d=this.dogs.get(i);</span>
 			}
 			else {
-<span class="pc bpc" id="L162" title="2 of 4 branches missed.">				if(this.dogs.get(i).getDate().isAfter(date) &amp;&amp; this.dogs.get(i).getDate().isBefore(d.getDate())) {</span>
-<span class="nc" id="L163">					d=this.dogs.get(i);</span>
+<span class="pc bpc" id="L167" title="1 of 4 branches missed.">				if(this.dogs.get(i).getDate().isAfter(date) &amp;&amp; this.dogs.get(i).getDate().isBefore(d.getDate())) {</span>
+<span class="nc" id="L168">					d=this.dogs.get(i);</span>
 				}
 			}
 		}
 		
-<span class="fc" id="L168">		return d;</span>
+<span class="fc" id="L173">		return d;</span>
 	}
 	
 	
@@ -177,32 +182,32 @@ public class DogLib {
 		
 		try {
 			
-<span class="fc" id="L180">			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span>
-<span class="fc" id="L181">			DocumentBuilder builder = factory.newDocumentBuilder();</span>
-<span class="fc" id="L182">			Document doc = builder.parse(f);</span>
-<span class="fc" id="L183">			doc.getDocumentElement();</span>
-<span class="fc" id="L184">			NodeList dogNodes=doc.getElementsByTagName(&quot;dog&quot;);</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">			for(int i=0;i&lt;dogNodes.getLength();i++) {</span>
-<span class="fc" id="L186">				Node dogNode = dogNodes.item(i);</span>
+<span class="fc" id="L185">			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L186">			DocumentBuilder builder = factory.newDocumentBuilder();</span>
+<span class="fc" id="L187">			Document doc = builder.parse(f);</span>
+<span class="fc" id="L188">			doc.getDocumentElement();</span>
+<span class="fc" id="L189">			NodeList dogNodes=doc.getElementsByTagName(&quot;dog&quot;);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">			for(int i=0;i&lt;dogNodes.getLength();i++) {</span>
+<span class="fc" id="L191">				Node dogNode = dogNodes.item(i);</span>
 				
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">				if(dogNode.getNodeType() == Node.ELEMENT_NODE) {</span>
-<span class="fc" id="L189">					Element dogElement = (Element) dogNode;</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">				if(dogNode.getNodeType() == Node.ELEMENT_NODE) {</span>
+<span class="fc" id="L194">					Element dogElement = (Element) dogNode;</span>
 					
-<span class="fc" id="L191">					String dogName = dogElement.getAttribute(&quot;name&quot;);</span>
-<span class="fc" id="L192">					String dogDate = dogElement.getElementsByTagName(&quot;dateOfBirth&quot;).item(0).getTextContent();</span>
-<span class="fc" id="L193">					Double dogWeight = Double.parseDouble(dogElement.getElementsByTagName(&quot;weight&quot;).item(0).getTextContent());</span>
-<span class="fc" id="L194">					String dogBreed = dogElement.getElementsByTagName(&quot;breed&quot;).item(0).getTextContent();</span>
+<span class="fc" id="L196">					String dogName = dogElement.getAttribute(&quot;name&quot;);</span>
+<span class="fc" id="L197">					String dogDate = dogElement.getElementsByTagName(&quot;dateOfBirth&quot;).item(0).getTextContent();</span>
+<span class="fc" id="L198">					Double dogWeight = Double.parseDouble(dogElement.getElementsByTagName(&quot;weight&quot;).item(0).getTextContent());</span>
+<span class="fc" id="L199">					String dogBreed = dogElement.getElementsByTagName(&quot;breed&quot;).item(0).getTextContent();</span>
 					
-<span class="fc" id="L196">					this.dogs.add(new Dog(dogName,dogDate,dogWeight,dogBreed));</span>
+<span class="fc" id="L201">					this.dogs.add(new Dog(dogName,dogDate,dogWeight,dogBreed));</span>
 				}
 			}			
-<span class="nc" id="L199">		}catch(Exception e) {</span>
-<span class="nc" id="L200">			System.out.println(&quot;Can't parse document &quot;+ this.xmlFile);</span>
-<span class="fc" id="L201">		}</span>
+<span class="nc" id="L204">		}catch(Exception e) {</span>
+<span class="nc" id="L205">			System.out.println(&quot;Can't parse document &quot;+ this.xmlFile);</span>
+<span class="fc" id="L206">		}</span>
 			
 		
 		
-<span class="fc" id="L205">	}</span>
+<span class="fc" id="L210">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

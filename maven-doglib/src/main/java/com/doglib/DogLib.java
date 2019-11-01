@@ -136,12 +136,17 @@ public class DogLib {
 	
 	
 	/*
-	 * This method returns a list of the dogs that meet a certain condition
+	 * This method returns a list of the dogs that meet a certain predicate
 	 * 
 	 */
 	
-	public List<Dog> dogsByConditionPredicate(Predicate<Dog> predicate){
-		return this.dogs.stream().filter(predicate).collect(Collectors.<Dog>toList());
+	public List<Dog> dogsByCondition(Predicate<Dog> predicate){
+		List<Dog> ld=new ArrayList<Dog>();
+		for(Dog d : this.dogs) {
+			if(predicate.test(d))
+				ld.add(d);				
+		}
+		return ld;
 	}
 	
 	/*

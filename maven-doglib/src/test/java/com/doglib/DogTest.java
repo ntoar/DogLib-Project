@@ -33,5 +33,13 @@ public class DogTest {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		assertEquals("10-01-2010",d.getDate().format(formatter));
 	}
+	
+	@Test
+	public void setWeightTest() {
+		Dog d = new Dog("Pluto","10-01-2010",15,"Cartoon Puppy");
+		d.setWeight(17);
+		
+		assertEquals(17,d.getWeight(),0.00001);
+	}
 
 }

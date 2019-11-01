@@ -58,52 +58,17 @@ public class Dog {
 	}
 	
 	/*
-	 * Filter a dog with some predicates
+	 * The setters, so far we only implement set Weight
+	 * because it is the only expected attribute to change
 	 */
-	
-	// Breed Predicates
-	public static Predicate&lt;Dog&gt; isEqBreed(String breed){
-<span class="fc" id="L66">		return p -&gt; p.getBreed().equals(breed);</span>
-	}
-	
-	public static Predicate&lt;Dog&gt; isNeqBreed(String breed){
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		return p -&gt; ! p.getBreed().equals(breed);</span>
-	}
-	
-	
-	// Name Predicates
-	public static Predicate&lt;Dog&gt; isEqName(String name){
-<span class="fc" id="L76">		return p -&gt; p.getName().equals(name);</span>
-	}
-	
-	public static Predicate&lt;Dog&gt; isNeqName(String name){
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		return p -&gt; ! p.getName().equals(name);</span>
-	}
-	
-	
-	// Weight Predicates
-	public static Predicate&lt;Dog&gt; isGreaterWeight(double weight){
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		return p -&gt; p.getWeight() &gt; weight;</span>
-	}
-	
-	public static Predicate&lt;Dog&gt; isLesserWeight(double weight){
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		return p -&gt; p.getWeight() &lt; weight;</span>
-	}
-	
-	
-	// Date Predicates
-	public static Predicate&lt;Dog&gt; isAfterDate(LocalDate date){
-<span class="fc" id="L96">		return p -&gt; p.getDate().isAfter(date);</span>
-	}
-	
-	public static Predicate&lt;Dog&gt; isBeforeDate(LocalDate date){
-<span class="nc" id="L100">		return p -&gt; p.getDate().isBefore(date);</span>
-	}
-	
+	public void setWeight(double weight) {
+<span class="fc" id="L65">		this.weight=weight;</span>
+<span class="fc" id="L66">	}</span>
+		
 	
 	
 	public String toString() {
-<span class="nc" id="L106">		return &quot;Name: &quot;+this.name+&quot;\nDate of Birth: &quot;+this.dateOfBirth+&quot;\nWeight: &quot;+this.weight+&quot;\nBreed: &quot;+this.breed;</span>
+<span class="nc" id="L71">		return &quot;Name: &quot;+this.name+&quot;\nDate of Birth: &quot;+this.dateOfBirth+&quot;\nWeight: &quot;+this.weight+&quot;\nBreed: &quot;+this.breed;</span>
 		
 	}
 	
