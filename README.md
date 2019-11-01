@@ -78,7 +78,7 @@ and provides some methods to query the list of dogs.
 	     [Shiba Inu] -> [17]
 	     [Siberian Husky] -> [25]
 	  
-    * #### List<Dog> dogsByCondition(Predicate<Dog> predicate)
+    * #### List<Dog> dogsByConditionPredicate(Predicate<Dog> predicate)
       This method returns a list of the dogs that meet a certain condition  
       This makes use of the predefined predicates in the Dog class:
         * isEqBreed(String breed)  
@@ -125,7 +125,7 @@ public class DogliBenchmark {
   Map<String, Double> m = dl.averageWeightPerBreed();
 		
   // dogsByCondition example		
-  List<Dog> d = dl.dogsByCondition("breed", "eq", "Shiba Inu");
+  List<Dog> d = dl.dogsByConditionPredicate(Dog.isEqBreed("Shiba Inu"));
   
   // oldestDogAfterDate example
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
