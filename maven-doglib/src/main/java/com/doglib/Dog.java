@@ -3,6 +3,7 @@ package com.doglib;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.function.Predicate;
 
 public class Dog {
 	
@@ -56,68 +57,54 @@ public class Dog {
 		return this.breed;
 	}
 	
-	
 	/*
-	 * Method to evaluate if the dog meets a certain condition
-	 * It takes three String params:
-	 * a: the dog attribute to check for the condition (breed, name, weight, date)
-	 * b: the comparison operator depending on the attribute can be
-	 * 		eq, neq for breed and name
-	 * 		>, <, = for weight
-	 * 		isAfter, isBefore, isEqual for date
+	 * Filter a dog with some predicates
 	 */
 	
-	public boolean meetsCondition(String a, String b, String c) {
+	// Breed Predicates
+	public static Predicate<Dog> isEqBreed(String breed){
+		return p -> p.getBreed().equals(breed);
+	}
+	
+	public static Predicate<Dog> isNeqBreed(String breed){
+		return p -> ! p.getBreed().equals(breed);
+	}
+	
+	
+	// Name Predicates
+	public static Predicate<Dog> isEqName(String name){
+		return p -> p.getName().equals(name);
+	}
+	
+	public static Predicate<Dog> isNeqName(String name){
+		return p -> ! p.getName().equals(name);
+	}
+	
+	
+	// Weight Predicates
+	public static Predicate<Dog> isGreaterWeight(double weight){
+		return p -> p.getWeight() > weight;
+	}
+	
+	public static Predicate<Dog> isLesserWeight(double weight){
+		return p -> p.getWeight() < weight;
+	}
+	
+	
+	// Date Predicates
+	public static Predicate<Dog> isAfterDate(LocalDate date){
+		return p -> p.getDate().isAfter(date);
+	}
+	
+	public static Predicate<Dog> isBeforeDate(LocalDate date){
+		return p -> p.getDate().isBefore(date);
+	}
+	
+	
+	
+	public String toString() {
+		return "Name: "+this.name+"\nDate of Birth: "+this.dateOfBirth+"\nWeight: "+this.weight+"\nBreed: "+this.breed;
 		
-		switch(a) {
-		case "breed":
-			if(b.equals("eq")) {
-				return this.breed.equals(c);
-			}
-			else if (b.contentEquals("neq")) {
-				return !this.breed.equals(c);
-			}
-			else return false;
-			
-		case "name":
-			if(b.equals("eq")) {
-				return this.name.equals(c);
-			}
-			else if (b.contentEquals("neq")) {
-				return !this.name.equals(c);
-			}
-			else return false;
-				
-		case "weight":
-			if(b.equals(">")) {
-				return this.weight > Double.parseDouble(c);
-			}
-			else if (b.equals("<")) {
-				return this.weight < Double.parseDouble(c);
-			}
-			else if (b.contentEquals("=")) {
-				return this.weight == Double.parseDouble(c);
-			}
-			else return false;
-			
-		case "date":
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			LocalDate date = LocalDate.parse(c,formatter);
-			if(b.equals("isAfter")) {
-				return this.dateOfBirth.isAfter(date);
-			}
-			else if(b.equals("isBefore")) {
-				return this.dateOfBirth.isBefore(date);
-			}
-			else if(b.equals("isEqual")) {
-				return this.dateOfBirth.isEqual(date);
-			}
-			else return false;
-			
-		default:
-			return false;
-			
-		}
 	}
 	
 

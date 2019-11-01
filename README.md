@@ -78,15 +78,18 @@ and provides some methods to query the list of dogs.
 	     [Shiba Inu] -> [17]
 	     [Siberian Husky] -> [25]
 	  
-    * #### List<Dog> dogsByCondition(String a, String b, String c)
+    * #### List<Dog> dogsByCondition(Predicate<Dog> predicate)
       This method returns a list of the dogs that meet a certain condition
-	     This makes use of the meetsCondition method in the Dog class
-	     It takes three String params:
-	       a: the dog attribute to check for the condition (breed, name, weight, date)
-	       b: the comparison operator depending on the attribute can be
-	  		     eq, neq for breed and name
-	  		     \>, <, = for weight
-	  		     isAfter, isBefore, isEqual for date
+	     This makes use of the predefined predicates in the Dog class:
+  * isEqBreed(String breed)
+  * isNeqBreed(String breed)
+  * isEqName(String name)
+  * isNeqName(String name)
+  * isGreaterWeight(double weight)
+  * isLesserWeight(double weight)
+  * isAfterDate(LocalDate date)
+  * isBeforeDate(LocalDate date)
+	
                  
     * #### Dog oldestDogAfterDate(LocalDate date)
       This method returns the oldest dog after a certain date of birth

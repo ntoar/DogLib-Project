@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -135,24 +137,11 @@ public class DogLib {
 	
 	/*
 	 * This method returns a list of the dogs that meet a certain condition
-	 * This makes use of the meetsCondition method in the Dog class
-	 * It takes three String params:
-	 * a: the dog attribute to check for the condition (breed, name, weight, date)
-	 * b: the comparison operator depending on the attribute can be
-	 * 		eq, neq for breed and name
-	 * 		>, <, = for weight
-	 * 		isAfter, isBefore, isEqual for date
+	 * 
 	 */
 	
-	public List<Dog> dogsByCondition(String a,String b,String c){
-		List<Dog> listdog = new ArrayList<Dog>();
-		for(int i=0;i<this.dogs.size();i++) {
-			if(this.dogs.get(i).meetsCondition(a,b,c)) {
-				listdog.add(this.dogs.get(i));
-			}
-		}		
-		return listdog;
-		
+	public List<Dog> dogsByConditionPredicate(Predicate<Dog> predicate){
+		return this.dogs.stream().filter(predicate).collect(Collectors.<Dog>toList());
 	}
 	
 	/*
@@ -170,7 +159,7 @@ public class DogLib {
 					d=this.dogs.get(i);
 			}
 			else {
-				if(this.dogs.get(i).getDate().isBefore(d.getDate())) {
+				if(this.dogs.get(i).getDate().isAfter(date) && this.dogs.get(i).getDate().isBefore(d.getDate())) {
 					d=this.dogs.get(i);
 				}
 			}
